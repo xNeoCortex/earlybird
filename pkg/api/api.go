@@ -28,7 +28,7 @@ import (
 	"github.com/americanexpress/earlybird/v4/pkg/git"
 	"github.com/americanexpress/earlybird/v4/pkg/scan"
 	"github.com/americanexpress/earlybird/v4/pkg/utils"
-	"gopkg.in/src-d/go-git.v4/plumbing/transport"
+	"github.com/go-git/go-git/v5/plumbing/transport"
 )
 
 //Scan uses the Earlybird config to search uploaded multipart files for secrets

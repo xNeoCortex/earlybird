@@ -19,7 +19,7 @@ package git
 import (
 	"context"
 	"fmt"
-	"gopkg.in/src-d/go-git.v4/plumbing"
+	"github.com/go-git/go-git/v5/plumbing"
 	"log"
 	"os"
 	"strings"
@@ -27,8 +27,8 @@ import (
 	"github.com/americanexpress/earlybird/v4/pkg/utils"
 
 	"github.com/google/go-github/github"
-	"gopkg.in/src-d/go-git.v4"
-	"gopkg.in/src-d/go-git.v4/plumbing/transport/http"
+	"github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/plumbing/transport/http"
 )
 
 //ReposPerProject returns all the repositories contained within a  bitbucket or github project
