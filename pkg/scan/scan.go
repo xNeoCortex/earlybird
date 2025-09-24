@@ -546,6 +546,29 @@ func (hit *Hit) filePostProcess(cfg *cfgReader.EarlybirdConfig, rule *Rule, file
 		}
 		isHit = postprocess.IsPrivatePem(fileBytes)
 		break
+	case rule.Postprocess == "llm":
+		// Heuristic detection for likely LLM-generated text at file level
+		fileBytes := file.Raw
+		if fileBytes == nil {
+			fileBytes, _ = os.ReadFile(file.Path)
+		}
+		suspect, conf := postprocess.IsLLMGenerated(fileBytes)
+		if suspect {
+			// Adjust hit metadata
+			hit.Caption = "Possible LLM-generated content (heuristic)"
+			hit.Category = "ai-generated"
+			if conf > 0 {
+				hit.ConfidenceID = conf
+				hit.Confidence = getLevelNameFromID(conf, cfg.LevelMap)
+			}
+			// Default severity to low so this does not fail builds unless configured
+			sev := getIdFromLevelName(infoLevelSeverity, cfg.LevelMap)
+			hit.SeverityID = sev
+			hit.Severity = getLevelNameFromID(sev, cfg.LevelMap)
+			isHit = true
+			break
+		}
+		isHit = false
 	default:
 		isHit = true
 	}
